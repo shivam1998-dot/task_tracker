@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker | Business Control</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="D:\Task Tracker\Home Page\``favicon.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('Home page.jpg'); /* Ensure path is correct */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Horizontal Navigation Bar with Semi-Transparent Background Matching the Image */
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+            padding: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 15px;
+            margin: 0 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, padding-left 0.3s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+        }
+
+        .navbar a:hover {
+            background-color: #007e7e;
+            padding-left: 20px; /* Adds a subtle indent effect on hover */
+        }
+
+        /* Content Wrapper with Background Image */
+        .content-wrapper {
+            flex-grow: 1; /* This will make sure it takes up the remaining space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Stack items vertically */
+            color: #ffffff;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Subtitle (Your business control line) - Positioned at the bottom */
+        .content-wrapper p {
+            font-size: 18px;
+            max-width: 600px; /* Limit width for readability */
+            margin: 0;
+            position: absolute;
+            bottom: 20px; /* Distance from the bottom */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center the text */
+            background-color: transparent; /* Make the background transparent */
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* New Bottom Bar (Task Tracker on right side) */
+        .bottom-bar {
+            background-color: #00bdbe;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        /* Live Watch (Clock) Style just below the navbar */
+        .live-watch {
+            position: absolute;
+            top: 70px; /* Position just below the navbar */
+            right: 20px; /* Right side of the page */
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1001; /* Ensure it stays above other content */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="https://docs.google.com/spreadsheets/d/1iwznmDn_7uB1MFSMgG0M4fsiw1JJxvY8NOBbAeiu2hY/edit?usp=drive_link" target="_self">OFB Business</a>
+        <a href="https://docs.google.com/spreadsheets/d/1y0WIW3ixHU8SpAcz_3YuX5sB_Gwo5HDTC8PN7hmEENI/edit?usp=drive_link" target="_self">T-MIS Recon Task</a>
+        <a href="https://docs.google.com/spreadsheets/d/1hoyne5oT1A0zghhkeiVysEYgL2NyfXnRp1-V5nDdVyI/edit?usp=drive_link" target="_self">Stock Reconciliation</a>
+        <a href="https://docs.google.com/spreadsheets/d/1T3PWH6ecmKwi7jS295jWT11Fw1mN5FLZojNf6Bagflo/edit?usp=drive_link" target="_self">Reporting & Analysis</a>
+        <a href="https://docs.google.com/spreadsheets/d/158I5hQDowendBxbVclCzVXp_bP5d8YFI1iQlJfKlReA/edit?usp=drive_link" target="_self">Password</a>
+        <a href="https://docs.google.com/spreadsheets/d/17rCb-j_RwTWKZOpm7DNamZYvUt1tmmUugEBIpnZrcSA/edit?usp=drive_link" target="_self">Subsidiary</a>
+        <a href="https://docs.google.com/spreadsheets/d/1ZfNgS8O4jRll_OgUBxVg7Kf34y37O1CLziCfpZKx3jc/edit?usp=drive_link" target="_self">Request Form</a>
+        <a href="https://drive.google.com/file/d/1za7ZLKFnuCuuDOhUkST0plIAYZ0poHrJ/view?usp=drive_link" target="_self">SOP</a>
+    </div>
+
+    <!-- Content Wrapper with Background Image -->
+    <div class="content-wrapper">
+        <!-- The paragraph is moved to the bottom with transparent background -->
+        <p>Take Control of Your Tasks – All in One</p>
+    </div>
+
+    <!-- Bottom Bar with 'Task Tracker' text on the right side -->
+    <div class="bottom-bar">
+        Task Tracker
+    </div>
+
+    <!-- Live Watch (Clock) on the right side just below the navbar -->
+    <div class="live-watch" id="liveWatch">
+        <!-- Time will be displayed here -->
+    </div>
+
+    <script>
+        // Function to update the clock every second
+        function updateClock() {
+            const clockElement = document.getElementById('liveWatch');
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Initial call to display the time immediately
+        updateClock();
+    </script>
+
+</body>
+</html>
